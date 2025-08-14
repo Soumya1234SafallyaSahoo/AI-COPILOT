@@ -51,8 +51,6 @@ The AI Voice Agent follows a **client-server architecture** with API-based integ
 6. **User Hears Response** 👂 – The frontend plays the generated audio in real time.
 7. # ⚙️ Getting Started
 
----
-![image alt](https://github.com/Soumya1234SafallyaSahoo/AI-COPILOT/blob/2cf16bc01aa9211d1e99aa8a847cdb522891a739/WhatsApp%20Image%202025-08-14%20at%2023.51.00_96f2b202.jpgt])
 ## 📋 Prerequisites
 Before running the project, make sure you have:
 
@@ -64,6 +62,42 @@ Before running the project, make sure you have:
   - **OpenAI** (LLM Processing)
   - **Murf.ai** (Text-to-Speech)
 - 💻 Any modern web browser (Chrome, Edge, Firefox, etc.)
+- 
+**API Keys** 🔑  
+   You need valid API keys for:
+   - **AssemblyAI** – For Speech-to-Text  
+     Sign up: [https://www.assemblyai.com](https://www.assemblyai.com)
+   - **OpenAI** – For LLM (AI text processing)  
+     Sign up: [https://platform.openai.com](https://platform.openai.com)
+   - **Murf.ai** – For Text-to-Speech  
+     Sign up: [https://murf.ai](https://murf.ai)
+
+   **Code Editor** ✏️  
+  - Recommended: **VS Code** for editing and running the project.
+⚙️ Installation & Dependencies
+
+Clone the repository
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+
+Create & activate a virtual environment (optional but recommended)
+python -m venv venv
+Windows: venv\Scripts\activate
+Mac/Linux: source venv/bin/activate
+
+Install dependencies
+pip install -r requirements.txt
+(Key packages: fastapi, uvicorn, requests, openai, assemblyai, murfpy)
+
+Set up environment variables in a .env file:
+OPENAI_API_KEY=your_openai_api_key
+ASSEMBLYAI_API_KEY=your_assemblyai_api_key
+MURF_API_KEY=your_murf_api_key
+
+Run the API server
+uvicorn main:app --reload
+
+Open index.html in your browser and start using the AI Voice Agent.
 
 
 
