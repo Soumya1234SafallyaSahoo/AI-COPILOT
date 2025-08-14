@@ -52,7 +52,7 @@ The AI Voice Agent follows a **client-server architecture** with API-based integ
 7. # ⚙️ Getting Started
 
 ---
-
+![image alt](https://github.com/Soumya1234SafallyaSahoo/AI-COPILOT/blob/2cf16bc01aa9211d1e99aa8a847cdb522891a739/WhatsApp%20Image%202025-08-14%20at%2023.51.00_96f2b202.jpgt])
 ## 📋 Prerequisites
 Before running the project, make sure you have:
 
