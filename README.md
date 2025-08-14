@@ -27,7 +27,7 @@ This modular design makes it perfect for **customer support**, **virtual teachin
 - ⚡ **Real-Time Performance** – Designed for speed and responsiveness.
 
 ---
-![image alt](https://github.com/Soumya1234SafallyaSahoo/AI-COPILOT/blob/main/WhatsApp%20Image%202025-08-14%20at%2023.51.00_96f2b202.jpg?raw=trueage alt])
+![image alt](https://github.com/Soumya1234SafallyaSahoo/AI-COPILOT/blob/main/WhatsApp%20Image%202025-08-14%20at%2023.51.00_96f2b202.jpg?raw=trueage)
 # 🛠 Tech Stack
 | 💡 Component        | 🔧 Technology Used |
 |---------------------|--------------------|
