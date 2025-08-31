@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voice Echo Studio</title>
+
+  <!-- Modern, clean font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --ink:#1f2430;
+      --muted:#6b7280;
+      --brand:#6c5ce7;      /* purple */
+      --brand-2:#a78bfa;    /* soft violet */
+      --accent:#10b981;     /* green */
+      --danger:#ef4444;     /* red */
+      --ring:rgba(108,92,231,.25);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(60rem 60rem at -10% -20%, #e9e6ff 0%, transparent 50%),
+        radial-gradient(60rem 60rem at 120% 120%, #dff7f0 0%, transparent 50%),
+        var(--bg);
+      color:var(--ink);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    /* Header */
+    .appbar{
+      position:sticky; top:0; z-index:10;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#fff;
+      padding:14px 22px;
+      box-shadow:0 6px 20px rgba(108,92,231,.25);
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .appbar h1{
+      margin:0; font-size:20px; font-weight:700; letter-spacing:.2px;
+    }
+    .badge{
+      font-size:12px; padding:4px 8px; border-radius:999px;
+      background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.35)
+    }
+
+    /* Shell */
+    .shell{
+      max-width:1100px; margin:26px auto; padding:0 20px;
+      display:grid; grid-template-columns: 2fr 1fr; gap:22px;
+    }
+
+    /* Chat card */
+    .card{
+      background:var(--card); border-radius:16px;
+      box-shadow:0 10px 30px rgba(28,28,45,.08);
+      overflow:hidden; border:1px solid #eef0f6;
+    }
+    .card-header{
+      padding:14px 16px; border-bottom:1px solid #eef0f6;
+      display:flex; align-items:center; gap:10px; justify-content:space-between;
+    }
+    .card-header h2{ margin:0; font-size:16px; font-weight:700; color:var(--ink);}
+    .subtitle{color:var(--muted); font-size:12px}
+
+    #chat-box{
+      height:540px; overflow:auto; padding:18px; display:flex; flex-direction:column; gap:10px;
+      background: linear-gradient(180deg,#ffffff 0%, #fbfbfe 100%);
+    }
+    .message{
+      max-width:78%; padding:10px 14px; border-radius:12px; line-height:1.35; font-size:14px;
+      box-shadow:0 4px 12px rgba(0,0,0,.05);
+    }
+    .assistant{ align-self:flex-start; background:#eef2ff; color:#312e81; border:1px solid #e0e7ff;}
+    .user{ align-self:flex-end; background:#dcfce7; color:#064e3b; border:1px solid #bbf7d0;}
+    .error{ align-self:center; background:#fee2e2; color:#7f1d1d; border:1px solid #fecaca;}
+
+    /* Control panel */
+    .panel{ padding:16px; display:grid; gap:14px}
+    .stack{ display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    label{ font-size:12px; color:var(--muted)}
+    select{
+      appearance:none; -webkit-appearance:none;
+      padding:10px 12px; font-size:14px; border-radius:10px;
+      border:1px solid #e6e8f0; background:#fff; color:var(--ink);
+      outline:none;
+    }
+    select:focus{ box-shadow:0 0 0 6px var(--ring); border-color:var(--brand)}
+
+    /* Mic button */
+    #record-btn{
+      padding:14px 18px; border:0; border-radius:12px;
+      font-weight:700; font-size:15px; cursor:pointer;
+      color:#fff; background:linear-gradient(90deg,var(--brand),var(--brand-2));
+      box-shadow:0 12px 24px rgba(108,92,231,.35);
+      transition:transform .15s ease, filter .15s ease;
+    }
+    #record-btn:hover{ transform:translateY(-1px); filter:saturate(1.05)}
+    #record-btn:active{ transform:translateY(0) scale(.98)}
+    #record-btn.recording{
+      background:linear-gradient(90deg,#ef4444,#f59e0b);
+      box-shadow:0 12px 24px rgba(239,68,68,.35);
+      animation:pulse 1.2s infinite;
+    }
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(239,68,68,.35) }
+      80%{ box-shadow:0 0 0 18px rgba(239,68,68,0) }
+      100%{ box-shadow:0 0 0 0 rgba(239,68,68,0) }
+    }
+
+    /* Status + audio */
+    #status{ font-size:13px; color:var(--muted)}
+    #audio-player{ width:100% }
+
+    /* Toasts */
+    .toast-container{
+      position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:9999;
+    }
+    .toast{
+      background:#111827; color:#fff; padding:10px 14px; border-radius:12px; font-size:13px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25); opacity:.98;
+    }
+    .toast.success{ background:#065f46 }
+    .toast.error{ background:#7f1d1d }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="appbar">
+    <h1>Voice Echo Studio</h1>
+    <span class="badge">Murf + Assembly</span>
+  </header>
+
+  <!-- Main layout -->
+  <main class="shell">
+    <!-- Chat area -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Conversation</h2>
+        <span class="subtitle">Transcripts & responses</span>
+      </div>
+      <div id="chat-box"></div>
+    </section>
+
+    <!-- Controls -->
+    <aside class="card">
+      <div class="card-header">
+        <h2>Controls</h2>
+        <span class="subtitle">Pick a voice and record</span>
+      </div>
+      <div class="panel">
+        <div class="stack">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label for="voice-select">Voice</label>
+            <select id="voice-select">
+              <option value="Natalie">Natalie (Female)</option>
+              <option value="Matthew">Matthew (Male)</option>
+            </select>
+          </div>
+          <button id="record-btn">🎙 Start Recording</button>
+        </div>
+
+        <div class="stack" style="justify-content:space-between">
+          <div id="status">Idle</div>
+        </div>
+
+        <audio id="audio-player" controls></audio>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Toasts -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Your existing JS -->
+  <script src="/static/script.js"></script>
+</body>
+</html>
