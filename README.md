@@ -114,3 +114,6 @@ uvicorn main:app --reload
 🙌 Acknowledgements
 
 Thanks to Murf and the 30 Days of AI Voice Agents Challenge community for the learning journey and inspiration.
+
+👤 Author
+Soumya Safallya Sahoo
