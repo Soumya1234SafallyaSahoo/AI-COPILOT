@@ -111,8 +111,6 @@ MURF_API_KEY=your_murf_api_key
 Run the API server
 uvicorn main:app --reload
 
-Open index.html in your browser and start using the AI Voice Agent.
-
 🙌 Acknowledgements
 
 Thanks to Murf and the 30 Days of AI Voice Agents Challenge community for the learning journey and inspiration.
